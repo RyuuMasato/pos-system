@@ -1,13 +1,17 @@
-<button (click)="newStudent()">New</button>
-<ul>
-  <li class="items">
-    <!--<span class="badge">create new</span> <input #newItem type="text" (keyup.enter)="createStudent(newItem.value)"/>-->
-  </li>
-  <li class="items"
-      *ngFor="let student of students | async"
-      (click)="onSelect(student)">
-    <span class="badge">{{student.$key}}</span> {{student.name}}
-  </li>
-</ul>
-
-<!--<detail-component [selectedStudent]=""></detail-component>-->
+<div>
+  <button>Toevoegen</button>
+  <ul>
+    <li class="items"
+        *ngFor="let student of firebaseStudents | async"
+        (click)="onSelect(student.$key)">
+      <span class="badge">{{student.name}} {{student.lastname}}</span>
+    </li>
+  </ul>
+</div>
+<div>
+  <student-detail-component
+    class="student-detail"
+    *ngIf="firebaseStudent"
+    [student]="student">
+  </student-detail-component>
+</div>

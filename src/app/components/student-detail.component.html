@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<div>
+  <label>Naam</label>
+  <input type="text" [(ngModel)]="student.name" [disabled]="!editable"/>
+</div>
+<div>
+  <label>Achternaam</label>
+  <input type="text" [(ngModel)]="student.lastname" [disabled]="!editable"/>
+</div>
+<div>
+  <label>Straatnaam</label>
+  <input type="text" [(ngModel)]="student.streetname" [disabled]="!editable"/>
+</div>
+<div>
+  <label>Huisnummer</label>
+  <input type="text" [(ngModel)]="student.housenumber" [disabled]="!editable"/>
+</div>
+<div>
+  <label>Toevoeging</label>
+  <input type="text" [(ngModel)]="student.addition" [disabled]="!editable"/>
+</div>
+<div>
+  <label>Postcode</label>
+  <input type="text" [(ngModel)]="student.postalcode" [disabled]="!editable"/>
+</div>
+<div>
+  <label>Woonplaats</label>
+  <input type="text" [(ngModel)]="student.city" [disabled]="!editable"/>
+</div>
+<div>
+  <label>Telefoonnummer</label>
+  <input type="tel" [(ngModel)]="student.phone" [disabled]="!editable"/>
+</div>
+<div>
+  <label>Email</label>
+  <input type="email" [(ngModel)]="student.email"  [disabled]="!editable"/>
+</div>
+<!--<button (click)="addStudent()">Nieuw</button>-->
+<!--<button *ngIf="!editable" (click)="toggleEditable()">Bewerken</button>-->
+<!--<button *ngIf="editable"-->
+        <!--(click)="updateStudent()">Opslaan</button>-->
+<!--<button (click)="removeStudent()">Verwijderen</button>-->

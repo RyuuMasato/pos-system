@@ -1,10 +1,49 @@
 import { Component } from '@angular/core';
+import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
+import {StudentMasterComponent} from "./components/student-master.component";
+
+// todo: abstract master-component and detail-component from this class
+// todo: create calendar-component
+// todo: create dashboard-component
+// todo: create user-auth-component
+// todo: create menu-component
+// todo: setup router
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  // todo: create receipt html 100% A4 directly printable or download as PDF
+  styleUrls: ['./app.component.css'],
+  providers: [StudentMasterComponent]
 })
 export class AppComponent {
-  title = 'app works!';
+  // todo: create model classes for contact and workEntry
+  // todo: firebase authentication
+  // todo: firebase file saving and hosting
+
+  // angularFire: AngularFire;
+  // items: FirebaseListObservable<any[]>;
+  // selectedItem: FirebaseObjectObservable<any>;
+  //
+  // constructor(private af: AngularFire) {
+  //   this.angularFire = af;
+  //   this.items = af.database.list('/items');
+  // }
+  //
+  // onSelect(item): void {
+  //   this.selectedItem = this.angularFire.database.object(`/items/${item.$key}`);
+  //   console.log(this.selectedItem);
+  // }
+  //
+  // updateItem(value): void {
+  //   this.selectedItem.set({name:value});
+  // }
+  //
+  // createItem(value: string): void {
+  //   this.selectedItem = this.angularFire.database.object(`/items/${this.items.push({name: value}).key}`);
+  // }
+  //
+  // removeItem(): void {
+  //   this.selectedItem.remove();
+  // }
 }
