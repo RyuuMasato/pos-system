@@ -1,0 +1,13 @@
+<button (click)="newStudent()">New</button>
+<ul>
+  <li class="items">
+    <!--<span class="badge">create new</span> <input #newItem type="text" (keyup.enter)="createStudent(newItem.value)"/>-->
+  </li>
+  <li class="items"
+      *ngFor="let student of students | async"
+      (click)="onSelect(student)">
+    <span class="badge">{{student.$key}}</span> {{student.name}}
+  </li>
+</ul>
+
+<!--<detail-component [selectedStudent]=""></detail-component>-->
