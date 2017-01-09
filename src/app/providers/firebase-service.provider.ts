@@ -16,7 +16,7 @@ export class FirebaseService {
   newFirebaseObject(target: string): FirebaseObjectObservable<any> {
     return this.getFirebaseObject(target, this.getFirebaseList(target).push({}).key);
   }
-  setFirebaseObject(target: string, value: Object): void {
+  setFirebaseObject(target: string, key: string, value: Object): void {
     this.newFirebaseObject(target).set(value);
   }
   removeFirebaseObject(target: string, key: string): void {

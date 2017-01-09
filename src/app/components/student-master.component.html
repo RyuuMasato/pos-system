@@ -1,5 +1,4 @@
 <div>
-  <button>Toevoegen</button>
   <ul>
     <li class="items"
         *ngFor="let student of firebaseStudents | async"
@@ -12,6 +11,10 @@
   <student-detail-component
     class="student-detail"
     *ngIf="firebaseStudent"
-    [student]="student">
+    [key]="key"
+    [student]="student"
+    (newStudentEmitter)="newStudent()"
+    (saveStudentEmitter)="saveStudent($event)"
+    (removeStudentEmitter)="removeStudent($event)">
   </student-detail-component>
 </div>

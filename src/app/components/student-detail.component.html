@@ -34,8 +34,15 @@
   <label>Email</label>
   <input type="email" [(ngModel)]="student.email"  [disabled]="!editable"/>
 </div>
-<!--<button (click)="addStudent()">Nieuw</button>-->
-<!--<button *ngIf="!editable" (click)="toggleEditable()">Bewerken</button>-->
-<!--<button *ngIf="editable"-->
-        <!--(click)="updateStudent()">Opslaan</button>-->
-<!--<button (click)="removeStudent()">Verwijderen</button>-->
+<button *ngIf="student"
+        (click)="emitAddStudent()">
+  Nieuw</button>
+<button *ngIf="!editable"
+        (click)="toggleEditable()">
+  Bewerken</button>
+<button *ngIf="editable"
+        (click)="emitUpdateStudent()">
+  Opslaan</button>
+<button *ngIf="editable"
+        (click)="emitRemoveStudent()">
+  Verwijderen</button>
