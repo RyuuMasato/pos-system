@@ -1,48 +1,108 @@
-<div>
-  <label>Naam</label>
-  <input type="text" [(ngModel)]="student.name" [disabled]="!editable"/>
+<div class="my-scrolling-content">
+  <md-card *ngIf="student" class="demo-card demo-basic margin-card">
+    <md-card-subtitle>
+      <span style="margin-left: 10px;">Details voor</span>
+    </md-card-subtitle>
+    <md-card-title>
+      {{student.name}} {{student.lastname}}
+    </md-card-title>
+
+     <md-card-content>
+      <form>
+      <table style="width: 100%" cellspacing="0">
+        <tr>
+          <td>
+            <md-input-container style="width: 100%;">
+              <input md-input
+                     name="name"
+                     placeholder="Naam"
+                     style="width: 100%"
+                     [(ngModel)]="student.name"
+                     [disabled]="!editable"/>
+            </md-input-container>
+          </td>
+          <td>
+            <md-input-container style="width: 100%;">
+              <input md-input
+                     name="lastname"
+                     placeholder="Achternaam"
+                     style="width: 100%"
+                     [(ngModel)]="student.lastname"
+                     [disabled]="!editable"/>
+            </md-input-container>
+          </td>
+        </tr>
+      </table>
+      <p>
+        <md-input-container style="width: 100%;">
+          <input md-input
+                 name="streetname"
+                 class="demo-full-width"
+                 placeholder="Adres"
+                 [(ngModel)]="student.streetname"
+                 [disabled]="!editable"/>
+        </md-input-container>
+      </p>
+      <table style="width: 100%" cellspacing="0"><tr>
+        <td>
+          <md-input-container style="width: 100%;">
+            <input md-input
+                   name="postalcode"
+                   class="demo-full-width"
+                   maxlength="6"
+                   placeholder="Postcode"
+                   [(ngModel)]="student.postalcode"
+                   [disabled]="!editable"/>
+            <md-hint align="end">{{student.postalcode.length}} / 6</md-hint>
+          </md-input-container>
+        </td>
+        <td>
+          <md-input-container style="width: 100%;">
+            <input md-input
+                   name="city"
+                   class="demo-full-width"
+                   placeholder="Woonplaats"
+                   [(ngModel)]="student.city"
+                   [disabled]="!editable"/>
+          </md-input-container>
+        </td>
+        </tr>
+        <tr>
+          <td>
+            <md-input-container style="width: 100%;">
+              <input md-input
+                     name="phone"
+                     class="demo-full-width"
+                     placeholder="Telefoon"
+                     [(ngModel)]="student.phone"
+                     [disabled]="!editable"/>
+            </md-input-container>
+          </td>
+          <td>
+            <md-input-container style="width: 100%;">
+              <input md-input
+                     name="email"
+                     class="demo-full-width"
+                     placeholder="Email"
+                     [(ngModel)]="student.email"
+                     [disabled]="!editable"/>
+            </md-input-container>
+          </td>
+        </tr>
+      </table>
+      </form>
+    </md-card-content>
+    <md-card-actions align="end" style="display: inline-block;">
+      <button md-button
+              *ngIf="!editable"
+              (click)="toggleEditable(!editable)">Bewerken</button>
+      <button md-button
+              *ngIf="editable"
+              (click)="emitUpdateStudent()">Opslaan</button>
+      <button md-button
+              *ngIf="editable && !newStudent"
+              (click)="emitRemoveStudent()">Verwijderen</button>
+    </md-card-actions>
+  </md-card>
 </div>
-<div>
-  <label>Achternaam</label>
-  <input type="text" [(ngModel)]="student.lastname" [disabled]="!editable"/>
-</div>
-<div>
-  <label>Straatnaam</label>
-  <input type="text" [(ngModel)]="student.streetname" [disabled]="!editable"/>
-</div>
-<div>
-  <label>Huisnummer</label>
-  <input type="text" [(ngModel)]="student.housenumber" [disabled]="!editable"/>
-</div>
-<div>
-  <label>Toevoeging</label>
-  <input type="text" [(ngModel)]="student.addition" [disabled]="!editable"/>
-</div>
-<div>
-  <label>Postcode</label>
-  <input type="text" [(ngModel)]="student.postalcode" [disabled]="!editable"/>
-</div>
-<div>
-  <label>Woonplaats</label>
-  <input type="text" [(ngModel)]="student.city" [disabled]="!editable"/>
-</div>
-<div>
-  <label>Telefoonnummer</label>
-  <input type="tel" [(ngModel)]="student.phone" [disabled]="!editable"/>
-</div>
-<div>
-  <label>Email</label>
-  <input type="email" [(ngModel)]="student.email"  [disabled]="!editable"/>
-</div>
-<button *ngIf="student"
-        (click)="emitAddStudent()">
-  Nieuw</button>
-<button *ngIf="!editable"
-        (click)="toggleEditable()">
-  Bewerken</button>
-<button *ngIf="editable"
-        (click)="emitUpdateStudent()">
-  Opslaan</button>
-<button *ngIf="editable"
-        (click)="emitRemoveStudent()">
-  Verwijderen</button>
+

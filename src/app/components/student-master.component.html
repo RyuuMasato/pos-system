@@ -1,20 +1,38 @@
-<div>
-  <ul>
-    <li class="items"
-        *ngFor="let student of firebaseStudents | async"
-        (click)="onSelect(student.$key)">
-      <span class="badge">{{student.name}} {{student.lastname}}</span>
-    </li>
-  </ul>
-</div>
-<div>
-  <student-detail-component
-    class="student-detail"
-    *ngIf="firebaseStudent"
-    [key]="key"
-    [student]="student"
-    (newStudentEmitter)="newStudent()"
-    (saveStudentEmitter)="saveStudent($event)"
-    (removeStudentEmitter)="removeStudent($event)">
-  </student-detail-component>
-</div>
+<md-sidenav-container class="my-container">
+  <md-sidenav mode="side" opened="true">
+    <div class="my-scrolling-content">
+      <md-toolbar color="primary">
+        <span style="margin-right: 10px;">Contacten </span>
+        <span>
+          <button md-mini-fab
+                  (click)="studentDetailComponent.setNewStudent()">
+          <md-icon>+</md-icon>
+        </button>
+        </span>
+      </md-toolbar>
+
+      <md-card>
+        <md-list>
+          <md-list-item class="md-2-line"
+                        *ngFor="let student of students | async"
+                        (click)="onSelect(student.$key)">
+            {{student.name}} {{student.lastname}}
+          </md-list-item>
+        </md-list>
+      </md-card>
+    </div>
+  </md-sidenav>
+      <student-detail-component
+        #studentDetailComponent
+        class="student-detail"
+        [key]="key"
+        [editable]="editable"
+        [newStudent]="newStudent"
+        [student]="student | async"
+        (toggleEdit) = "toggleEditable($event)"
+        (toggleNew) = "toggleNewStudent($event)"
+        (addStudent) = "addStudent($event)"
+        (updateStudent)="updateStudent($event)"
+        (removeStudent)="removeStudent($event)">
+      </student-detail-component>
+</md-sidenav-container>

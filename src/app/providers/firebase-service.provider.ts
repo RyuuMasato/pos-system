@@ -1,71 +1,21 @@
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
 
 @Injectable()
 export class FirebaseService {
-  private firebaseRef: AngularFire;
-  constructor(private af: AngularFire) {
+  firebaseRef: AngularFire;
+  target: string;
+  constructor(af: AngularFire, t: string) {
     this.firebaseRef = af;
+    this.target = t;
   }
-  getFirebaseList(target: string): FirebaseListObservable<any[]> {
-    return this.firebaseRef.database.list(target);
+  getList(): FirebaseListObservable<any[]> {
+    return this.firebaseRef.database.list(this.target);
   }
-  getFirebaseObject(target: string, key: string): FirebaseObjectObservable<any> {
-    return this.firebaseRef.database.object(`/${target}/${key}`);
+  getObject(key: string): FirebaseObjectObservable<any> {
+    return this.firebaseRef.database.object(`/${this.target}/${key}`);
   }
-  newFirebaseObject(target: string): FirebaseObjectObservable<any> {
-    return this.getFirebaseObject(target, this.getFirebaseList(target).push({}).key);
-  }
-  setFirebaseObject(target: string, key: string, value: Object): void {
-    this.newFirebaseObject(target).set(value);
-  }
-  removeFirebaseObject(target: string, key: string): void {
-    this.getFirebaseObject(target, key).remove();
+  objectToList(value: Object): FirebaseObjectObservable<any> {
+    return this.getObject(this.getList().push(value).key);
   }
 }
-
-
-
-
-
-
-// {
-//   path: string;
-//   angularFire: AngularFire;
-//   connectedFirebaseObject: FirebaseObjectObservable<any>;
-//   connectedFirebaseList: FirebaseListObservable<any[]>;
-//
-//   constructor(af: AngularFire, path: string) {
-//     this.angularFire = af;
-//     this.path = path;
-//   }
-//
-//   connectFirebaseList(): FirebaseListObservable<any[]> {
-//     this.connectedFirebaseList = this.angularFire.database.list(`${this.path}`);
-//     this.connectedFirebaseList.subscribe(
-//       ()=> console.log('success'),
-//       (error)=> console.log(error),
-//       ()=> console.log('complete')
-//     );
-//     return this.connectedFirebaseList;
-//   }
-//
-//   connectFirebaseObject(key: string): FirebaseObjectObservable<any> {
-//     this.connectedFirebaseObject = this.angularFire.database.object(`${this.path}/${key}`);
-//     this.connectedFirebaseObject.subscribe(
-//       ()=> console.log('success'),
-//       (error)=> console.log(error),
-//       ()=> console.log('complete')
-//     );
-//     return this.connectedFirebaseObject;
-//   }
-//
-//   createObject(key: string, object: any): FirebaseObjectObservable<any> {
-//     this.connectFirebaseObject(key).set(object);
-//     return this.connectedFirebaseObject;
-//   }
-//
-//   addToList(object: any): FirebaseObjectObservable<any> {
-//     return this.connectFirebaseObject(this.connectedFirebaseList.push(object).key);
-//   }
-// }

@@ -1,8 +1,7 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import {FirebaseService} from "../providers/firebase-service.provider";
 import {Student} from "../model/student.model";
-import {Subject} from "rxjs";
 
 @Component({
   selector: 'student-detail-component',
@@ -10,61 +9,58 @@ import {Subject} from "rxjs";
   styleUrls: ['./student-detail.component.css'],
   providers: [AngularFire, FirebaseService]
 })
-export class StudentDetailComponent {
+export class StudentDetailComponent implements OnInit {
   @Input()  key:           string;
-  @Input()  student:       Subject<Student>;
-            editable:      boolean = false;
+  @Input()  student:       Student;
+  @Input()  editable:      boolean = false;
+  @Input()  newStudent:    boolean = false;
+  @Output() updateStudent: EventEmitter<Object> = new EventEmitter();
+  @Output() removeStudent: EventEmitter<string> = new EventEmitter();
+  @Output() addStudent:    EventEmitter<Object> = new EventEmitter();
+  @Output() toggleEdit:    EventEmitter<boolean> = new EventEmitter();
+  @Output() toggleNew:     EventEmitter<boolean> = new EventEmitter();
 
   ngOnInit() {
-    this.student.subscribe(value => console.log(value));
+    console.log(this.student);
   }
-  toggleEditable(): void {
-    this.editable = !(this.editable);
+  toggleEditable(value): void {
+    this.toggleEdit.next(value);
   }
-  emitAddStudent(): void {
-    this.student.next();
-    this.toggleEditable();
+  toggleNewStudent(value): void {
+    this.toggleNew.next(value);
+  }
+  toggleDeselect(): void {
+    this.student = null;
+    this.toggleEditable(false);
+    this.toggleNewStudent(false);
+  }
+  setNewStudent(): void {
+    this.student = new Student();
+    this.toggleEditable(true);
+    this.toggleNewStudent(true);
   }
   emitUpdateStudent(): void {
-    this.student.next({student: this.student, key: this.key});
-    this.toggleEditable();
+    console.log(this.student);
+    let newStudent = new Student();
+    newStudent.name = this.student.name;
+    newStudent.lastname = this.student.lastname;
+    newStudent.streetname = this.student.streetname;
+    newStudent.housenumber = this.student.housenumber;
+    newStudent.postalcode = this.student.postalcode;
+    newStudent.city = this.student.city;
+    newStudent.phone = this.student.phone;
+    newStudent.email = this.student.email;
+    if(this.newStudent) {
+      this.addStudent.next(newStudent);
+    }
+    else {
+      this.updateStudent.next(newStudent);
+    }
+    this.toggleEditable(false);
+    this.toggleNewStudent(false);
   }
   emitRemoveStudent(): void {
-    this.student.next({key: this.key});
+    this.removeStudent.next(this.key);
+    this.toggleDeselect();
   }
-
-
-  // ngOnInit() {
-  //   this.cleanStudent();
-  //   this.updateLocal();
-  // }
-  //
-  // ngOnChanges() {
-  //   this.updateLocal();
-  // }
-  //
-  // toggleEditable(): void {
-  //   this.editable = !this.editable;
-  // }
-  //
-  // updateStudent(): void {
-  //   this.firebaseStudent.set(this.student);
-  //   this.toggleEditable();
-  // }
-  //
-  // removeStudent(): void {
-  //   this.firebaseStudent.remove();
-  //   this.cleanStudent();
-  // }
-  //
-  // updateLocal(): void {
-  //   this.firebaseStudent.subscribe((value)=> {
-  //     if(value!=null)
-  //       this.student = value;
-  //   });
-  // }
-  //
-  // cleanStudent(): void {
-  //   this.student = new Student();
-  // }
 }

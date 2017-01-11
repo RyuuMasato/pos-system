@@ -1,8 +1,7 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
-import {FirebaseService} from '../providers/firebase-service.provider';
 import {Student} from "../model/student.model";
-import {Subject} from "rxjs";
+import {FirebaseService} from "../providers/firebase-service.provider";
 
 @Component({
   selector: 'student-master-component',
@@ -11,54 +10,62 @@ import {Subject} from "rxjs";
   providers: [AngularFire, FirebaseService]
 })
 export class StudentMasterComponent implements OnInit{
-  firebaseService: FirebaseService;
-  firebaseStudents: FirebaseListObservable<any[]>;
-  firebaseStudent: FirebaseObjectObservable<any>;
-  student: Subject<Student>;
+  target: string = 'students';
+  studentService: FirebaseService;
+  students: FirebaseListObservable<any[]>;
+  student: any;
   key: string;
+  editable: boolean;
+  newStudent: boolean;
 
   constructor(af: AngularFire) {
-    this.firebaseService = new FirebaseService(af);
+    this.studentService = new FirebaseService(af, this.target);
+    this.editable = false;
+    this.newStudent = false;
   }
   ngOnInit(): void {
-    this.firebaseStudents = this.firebaseService.getFirebaseList('students');
+    this.students = this.studentService.getList();
+    this.students.subscribe((value)=>console.log(`students subscription: ${value}`));
+  }
+  toggleDeselect(): void {
+    this.student = null;
+  }
+  toggleEditable(event): void {
+    this.editable = event;
+  }
+  toggleNewStudent(event): void {
+    this.newStudent = event;
   }
   onSelect(key: string): void {
-    console.log(key);
-    this.firebaseStudent = this.firebaseService.getFirebaseObject('students', key);
-    this.logValue(this.firebaseStudent);
+    console.log(`setting student... - Event: ${key}`);
+    this.student = null;
+    this.student = this.studentService.getObject(key);
+    this.editable = false;
+    this.newStudent = false;
+    this.key = key;
   }
-  newStudent(): void {
-    console.log('adding');
-    this.firebaseStudent = this.firebaseService.newFirebaseObject('students');
-    this.logValue(this.firebaseStudent);
+  addStudent(event): void {
+    console.log(`new student...`);
+    this.student = this.studentService.objectToList(event);
   }
-  saveStudent(event): void {
-    console.log('saving...');
-    this.firebaseStudents.update(event.key, event.value);
+  updateStudent(event): void {
+    console.log(`updating student... - Event: ${event}`);
+    this.student.set(event);
   }
   removeStudent(event): void {
-    console.log('removing...');
-    this.firebaseStudents.remove(event.key);
-  }
-  setStudentDetails(value): void {
-    this.student.next({
-      name: value.name,
-      lastname: value.lastname,
-      streetname: value.streetname,
-      housenumber: value.housenumber,
-      addition: value.addition,
-      postalcode: value.postalcode,
-      city: value.city,
-      phone: value.phone,
-      email: value.email
-    });
-  }
-  logValue(firebaseObject: FirebaseObjectObservable<any>): void {
-    firebaseObject.subscribe((value)=> {
-      this.setStudentDetails(value);
-      this.key = value.$key;
-    });
-    console.log(`Logged student: ${this.student.name} ${this.student.lastname}`);
+    console.log(`removing student... - Event: ${event}`);
+    this.student.remove();
+    this.toggleDeselect();
   }
 }
+
+
+//   name: event.name,
+//   lastname: event.lastname,
+//   streetname: event.streetname,
+//   housenumber: event.housenumber,
+//   addition: event.addition,
+//   postalcode: event.postalcode,
+//   city: event.city,
+//   phone: event.phone,
+//   email: event.email

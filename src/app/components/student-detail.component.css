@@ -1,5 +1,5 @@
-label {
-  display: inline-block;
-  min-width: 200px;
-  max-width: 20%;
+.margin-card {
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 2%;
 }
