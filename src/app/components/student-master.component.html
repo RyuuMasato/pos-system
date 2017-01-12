@@ -2,20 +2,15 @@
   <md-sidenav mode="side" opened="true">
     <div class="my-scrolling-content">
       <md-toolbar color="primary">
-        <span style="margin-right: 10px;">Contacten </span>
-        <span>
-          <button md-mini-fab
-                  (click)="studentDetailComponent.setNewStudent()">
-          <md-icon>+</md-icon>
-        </button>
-        </span>
+        Contacten
       </md-toolbar>
 
       <md-card>
         <md-list>
           <md-list-item class="md-2-line"
                         *ngFor="let student of students | async"
-                        (click)="onSelect(student.$key)">
+                        (click)="onSelect(student.$key)"
+                        [class.selected]="key === student.$key">
             {{student.name}} {{student.lastname}}
           </md-list-item>
         </md-list>
@@ -36,3 +31,10 @@
         (removeStudent)="removeStudent($event)">
       </student-detail-component>
 </md-sidenav-container>
+
+<button md-mini-fab
+        class="my-fab"
+        (click)="studentDetailComponent.setNewStudent()">
+  <md-icon>+</md-icon>
+
+</button>
