@@ -14,13 +14,15 @@ import { FirebaseService } from './providers/firebase-service.provider';
 
 import {MaterialModule} from '@angular/material';
 import 'hammerjs';
+import {NameFilterPipe} from "./pipes/name-filter.pipe";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentDetailComponent,
-    StudentMasterComponent
+    StudentMasterComponent,
+    NameFilterPipe
   ],
   imports: [
     BrowserModule,

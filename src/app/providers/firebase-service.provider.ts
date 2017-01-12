@@ -10,7 +10,10 @@ export class FirebaseService {
     this.target = t;
   }
   getList(): FirebaseListObservable<any[]> {
-    return this.firebaseRef.database.list(this.target);
+    return this.firebaseRef.database.list(this.target, {
+      query: {
+      orderByChild: 'lastname'}
+    });
   }
   getObject(key: string): FirebaseObjectObservable<any> {
     return this.firebaseRef.database.object(`/${this.target}/${key}`);

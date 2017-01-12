@@ -8,25 +8,33 @@ body {
   height: 100vh;
 }
 
-.my-container md-sidenav {
-  max-width: 200px;
-}
-
 .my-container .md-sidenav-content,
 .my-container md-sidenav {
   display: flex;
 }
 
 .my-scrolling-content {
-  overflow: auto;
+  overflow: hidden;
 }
 
 button.my-fab {
   position: absolute;
-  right: 20px;
+  right: 10px;
   bottom: 10px;
 }
+
+button.toggle-menu {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 1000;
+}
+
 .selected {
-  background: lightblue;
+  background: lightgrey;
+}
+
+.opaque {
+  background: rgba(255,255,255,0.8);
 }
 

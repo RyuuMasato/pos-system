@@ -1,6 +1,5 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {AngularFire, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2';
-import {Student} from "../model/student.model";
+import {Component, OnInit} from '@angular/core';
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
 import {FirebaseService} from "../providers/firebase-service.provider";
 
 @Component({

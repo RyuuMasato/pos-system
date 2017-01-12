@@ -6,6 +6,11 @@
     <md-card-title>
       {{student.name}} {{student.lastname}}
     </md-card-title>
+    <div style="float:right;">
+      <button md-button
+              [disabled]="editable && !newStudent"
+              (click)="emitRemoveStudent()">Verwijderen</button>
+    </div>
 
      <md-card-content>
       <form>
@@ -70,6 +75,7 @@
           <td>
             <md-input-container style="width: 100%;">
               <input md-input
+                     type="tel"
                      name="phone"
                      class="demo-full-width"
                      placeholder="Telefoon"
@@ -80,6 +86,7 @@
           <td>
             <md-input-container style="width: 100%;">
               <input md-input
+                     type="email"
                      name="email"
                      class="demo-full-width"
                      placeholder="Email"
@@ -91,16 +98,13 @@
       </table>
       </form>
     </md-card-content>
-    <md-card-actions align="end" style="display: inline-block;">
+    <md-card-actions align="end">
       <button md-button
               *ngIf="!editable"
               (click)="toggleEditable(!editable)">Bewerken</button>
       <button md-button
               *ngIf="editable"
               (click)="emitUpdateStudent()">Opslaan</button>
-      <button md-button
-              *ngIf="editable && !newStudent"
-              (click)="emitRemoveStudent()">Verwijderen</button>
     </md-card-actions>
   </md-card>
 </div>

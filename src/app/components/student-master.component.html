@@ -1,21 +1,29 @@
-<md-sidenav-container class="my-container">
-  <md-sidenav mode="side" opened="true">
-    <div class="my-scrolling-content">
-      <md-toolbar color="primary">
-        Contacten
-      </md-toolbar>
+<button md-mini-fab class="toggle-menu" *ngIf="!contacts.opened" (click)="contacts.open()"><</button>
+<button md-mini-fab class="toggle-menu" *ngIf="contacts.opened" (click)="contacts.close()">></button>
 
+
+<md-sidenav-container class="my-container">
+  <md-sidenav #contacts class="opaque" mode="side" align="end">
+    <div style="background: white; position: inherit;">
+      <md-toolbar color="primary">
+        <div>Contacten</div>
+      </md-toolbar>
+      <md-input-container style="width:100%; margin: 10px;">
+        <input md-input type="search" [(ngModel)]="filter" placeholder="Zoeken"/>
+      </md-input-container>
+    </div>
+      <div class="my-scrolling-content">
       <md-card>
         <md-list>
           <md-list-item class="md-2-line"
-                        *ngFor="let student of students | async"
+                        *ngFor="let student of students | async | nameFilter: filter"
                         (click)="onSelect(student.$key)"
                         [class.selected]="key === student.$key">
             {{student.name}} {{student.lastname}}
           </md-list-item>
         </md-list>
       </md-card>
-    </div>
+      </div>
   </md-sidenav>
       <student-detail-component
         #studentDetailComponent
